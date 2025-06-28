@@ -84,7 +84,7 @@ jobs:
 
   build-test-x86_64:
     name: Build & Test SDK (x86_64)
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     needs: [common-dependencies-amd64]
     steps:
     - uses: actions/checkout@v4
