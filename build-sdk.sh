@@ -71,7 +71,7 @@ case ${TARGET_ARCH} in
         BINUTILS_NAME="aarch64-linux-gnu"
         ;;
     "armv7")
-        if [ $is_rhel = true ]; then
+        if [[ $is_rhel = true ]]; then
             echo "Error: RHEL-based distributions do NOT support armv7"
             exit -1
         fi
@@ -83,6 +83,7 @@ case ${TARGET_ARCH} in
         ;;
     *)
         echo "Error: unsupported architecture ${TARGET_ARCH}"
+        echo "Supported architectures are: x86_64, aarch64, armv7"
         exit -1
         ;;
 esac

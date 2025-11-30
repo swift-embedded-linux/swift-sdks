@@ -3,7 +3,7 @@ TARGET_ARCH=${TARGET_ARCH:=x86_64}
 SWIFT_VERSION=$1
 SWIFT_VERSION=$(echo $SWIFT_VERSION | xargs)
 if [ -z $SWIFT_VERSION ]; then
-    echo "Swift version is required! (e.g.: 6.0.3)"
+    echo "Swift version is required! (e.g.: 6.2)"
     exit -1
 fi
 

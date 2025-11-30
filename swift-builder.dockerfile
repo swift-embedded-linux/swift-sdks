@@ -1,4 +1,4 @@
-ARG SWIFT_VERSION=6.0.3
+ARG SWIFT_VERSION=6.2
 FROM swift:${SWIFT_VERSION}-jammy
 
 # Add user for building, customizable

@@ -10,6 +10,6 @@ RUN apt update && \
 ARG SWIFT_VERSION
 ARG DISTRIBUTION_NAME=ubuntu
 ARG DISTRIBUTION_VERSION=jammy
-ARG ROOT_URL=https://github.com/xtremekforever/swift-armv7/releases/download
+ARG ROOT_URL=https://github.com/swift-embedded-linux/armhf-debian/releases/download
 ARG PACKAGE_NAME=swift-${SWIFT_VERSION}-RELEASE-${DISTRIBUTION_NAME}-${DISTRIBUTION_VERSION}-armv7-install.tar.gz
 RUN wget ${ROOT_URL}/${SWIFT_VERSION}/${PACKAGE_NAME} && tar -xf ${PACKAGE_NAME} -C / && rm ${PACKAGE_NAME}
