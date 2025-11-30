@@ -21,21 +21,17 @@ runs:
     run: sudo apt install -y binutils binutils-${{ inputs.target-binutils }}
   - name: Build SDK
     shell: bash
-    run: TARGET_ARCH=${{ inputs.target-arch }} ./build-sdk.sh ${{ inputs.swift-version }} \
-      ${{ inputs.distribution }}
+    run: ./build-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }}
   - name: Test SDK with test-project
     shell: bash
-    run: |
-      TARGET_ARCH=${{ inputs.target-arch }} ./test-sdk.sh \
-        ${{ inputs.swift-version }} \
-        ${{ inputs.distribution }} \
+    run: ./test-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }} \
         --build-tests
       cp test-project/.build/debug/hello-world artifacts/
       cp test-project/.build/debug/*.xctest artifacts/
   - name: Test SDK with test-project (static)
     shell: bash
-    run: |
-      TARGET_ARCH=${{ inputs.target-arch }} ./test-sdk.sh \
+    run: ./test-sdk.sh \
+        ${{ inputs.target-arch }} \
         ${{ inputs.swift-version }} \
         ${{ inputs.distribution }} \
         --static-swift-stdlib

@@ -8,7 +8,7 @@ TEST_PROJECT=${TEST_PROJECT:=test-project}
 TEST_BINARY=${TEST_BINARY:=hello-world}
 BUILD_PROFILE=${BUILD_PROFILE:=debug}
 
-EXTRA_FLAGS=$3
+EXTRA_FLAGS=$4
 
 BUILDER_TAG=swift-builder:${SWIFT_VERSION}
 echo "Building ${BUILDER_TAG} image to be used to compile test-project..."
@@ -41,7 +41,9 @@ docker run --rm \
 
 if [ $TEST_BINARY ]; then
     OUTPUT_BINARY=${TEST_PROJECT}/.build/${BUILD_PROFILE}/${TEST_BINARY}
+    echo -n "Built Binary Info: "
     file $OUTPUT_BINARY
+    echo -n "Built Binary Size: "
     du -hs $OUTPUT_BINARY
     echo "Required Libraries:"
     readelf -d $OUTPUT_BINARY | grep "Shared library:" | sed -n 's/.*\[\(.*\)\].*/- \1/p'
