@@ -1,22 +1,23 @@
 
-TARGET_ARCH=$1
-TARGET_ARCH=$(echo $TARGET_ARCH | xargs)
-if [ -z $TARGET_ARCH ]; then
-    echo "Target architecture is required! (e.g.: x86_64, aarch64, armv7)"
-    exit -1
-fi
 
-SWIFT_VERSION=$2
+SWIFT_VERSION=$1
 SWIFT_VERSION=$(echo $SWIFT_VERSION | xargs)
 if [ -z $SWIFT_VERSION ]; then
     echo "Swift version is required! (e.g.: 6.2)"
     exit -1
 fi
 
-DISTRIBUTION=$3
+DISTRIBUTION=$2
 DISTRIBUTION=$(echo $DISTRIBUTION | xargs)
 if [ -z $DISTRIBUTION ]; then 
     echo "Distribution is required! (e.g.: ubuntu-jammy, rhel-ubi9)"
+    exit -1
+fi
+
+TARGET_ARCH=$3
+TARGET_ARCH=$(echo $TARGET_ARCH | xargs)
+if [ -z $TARGET_ARCH ]; then
+    echo "Target architecture is required! (e.g.: x86_64, aarch64, armv7)"
     exit -1
 fi
 

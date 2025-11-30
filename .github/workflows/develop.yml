@@ -9,7 +9,7 @@ on:
       swift-version:
         description: 'Swift Version'
         required: true
-        default: '6.1.2'
+        default: '6.2.1'
         type: string
       distribution:
         description: 'Distribution'

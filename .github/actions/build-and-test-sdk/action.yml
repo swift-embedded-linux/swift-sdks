@@ -2,7 +2,7 @@ name: Build SDK for a given Swift version, distribution, and target architecture
 description: This performs all the actions needed to generate a cross-compilation SDK.
 inputs:
   swift-version:
-    description: The version of Swift to use (.e.g., 5.9.2, 5.10.1, 6.0.3).
+    description: The version of Swift to use (.e.g., 6.0.3).
     required: true
   distribution:
     description: The name of the distribution to use for this SDK (e.g., ubuntu-jammy, rhel-ubi9).
@@ -16,17 +16,17 @@ runs:
   - name: Build SDK
     shell: bash
     run: |
-      ./build-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }}
+      ./build-sdk.sh ${{ inputs.swift-version }} ${{ inputs.distribution }} ${{ inputs.target-arch }}
   - name: Test SDK with test-project
     shell: bash
     run: |
-      ./test-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }} --build-tests
+      ./test-sdk.sh ${{ inputs.swift-version }} ${{ inputs.distribution }} ${{ inputs.target-arch }} --build-tests
       cp test-project/.build/debug/hello-world artifacts
       cp test-project/.build/debug/*.xctest artifacts
   - name: Test SDK with test-project (static)
     shell: bash
     run: |
-      ./test-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }} --static-swift-stdlib
+      ./test-sdk.sh ${{ inputs.swift-version }} ${{ inputs.distribution }} ${{ inputs.target-arch }} --static-swift-stdlib
       cp test-project/.build/debug/hello-world artifacts/hello-world-static
   - uses: actions/upload-artifact@v4
     name: Publish SDK
@@ -34,4 +34,3 @@ runs:
       name: artifacts-${{ inputs.swift-version }}-${{ inputs.distribution }}-${{ inputs.target-arch }}
       path: |
         artifacts/*
-
