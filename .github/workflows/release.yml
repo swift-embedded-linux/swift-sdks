@@ -1,7 +1,6 @@
-# The purpose of this CI is to build and test Linux Cross SDKs during development.
-# Only a single version of the SDK will be built for each architecture and tested.
-name: Develop Swift Linux Cross SDKs
-run-name: Build Swift SDKs for ${{ inputs.swift-version }} ${{ inputs.distribution }}
+# The purpose of this CI is to build and test Swift SDKs for a given Swift version.
+name: Release Swift Linux Cross SDKs
+run-name: Build Swift SDKs for ${{ inputs.swift-version }}, all supported distributions
 
 on:
   workflow_dispatch:
@@ -11,25 +10,9 @@ on:
         required: true
         default: '6.2.1'
         type: string
-      distribution:
-        description: 'Distribution'
-        required: true
-        default: 'debian-bookworm'
-        type: choice
-        options:
-          - ubuntu-focal
-          - ubuntu-jammy
-          - ubuntu-noble
-          - debian-bullseye
-          - debian-bookworm
-          - rhel-ubi9
-          - amazonlinux2
-  pull_request:
-    branches: [ "main" ]
 
 env:
   SWIFT_VERSION: ${{ inputs.swift-version || '6.1.2' }}
-  DISTRIBUTION: ${{ inputs.distribution || 'debian-bookworm' }}
   SDK_GENERATOR_DIR: swift-sdk-generator
   TEST_PROJECT: test-project
 
@@ -39,9 +22,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Install Dependencies
-        shell: bash
-        run: sudo apt install -y git-extras
       - name: Swift Version
         shell: bash
         run: swift --version
@@ -63,9 +43,6 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
-      - name: Install Dependencies
-        shell: bash
-        run: sudo apt install -y git-extras
       - name: Swift Version
         shell: bash
         run: swift --version
@@ -84,8 +61,21 @@ jobs:
         run: swift package resolve --package-path ${{ env.TEST_PROJECT }}
 
   build-test-x86_64:
+    strategy:
+      fail-fast: false
+      matrix:
+        distribution:
+        - ubuntu-focal
+        - ubuntu-jammy
+        - ubuntu-noble
+        - debian-bullseye
+        - debian-bookworm
+        - rhel-ubi9
+        - amazonlinux2
     name: Build & Test SDK (x86_64)
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     needs: [sdk-generator-amd64]
     steps:
     - uses: actions/checkout@v4
@@ -98,15 +88,39 @@ jobs:
           ${{ env.TEST_PROJECT }}/.build
         fail-on-cache-miss: true
     - uses: ./.github/actions/build-and-test-sdk
-      name: Build, Test, Publish ${{ env.SWIFT_VERSION }} for ${{ env.DISTRIBUTION }}
+      name: Build, Test, Publish ${{ env.SWIFT_VERSION }} for ${{ matrix.distribution }}
       with:
         swift-version: ${{ env.SWIFT_VERSION }}
-        distribution: ${{ env.DISTRIBUTION }}
+        distribution: ${{ matrix.distribution }}
         target-arch: x86_64
+    - name: Update Release ${{ env.SWIFT_VERSION }}
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        name: Swift ${{ env.SWIFT_VERSION }} SDKs
+        tag: ${{ env.SWIFT_VERSION }}
+        commit: ${{ github.sha }}
+        artifactErrorsFailBuild: false
+        artifacts: "artifacts/*.tar.gz"
+        body: |
+          Swift ${{ env.SWIFT_VERSION }} SDKs pre-built for various supported Linux distributions.
 
   build-test-aarch64:
+    strategy:
+      fail-fast: false
+      matrix:
+        distribution:
+        - ubuntu-focal
+        - ubuntu-jammy
+        - ubuntu-noble
+        - debian-bullseye
+        - debian-bookworm
+        - rhel-ubi9
+        - amazonlinux2
     name: Build & Test SDK (aarch64)
     runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
     needs: [sdk-generator-arm64]
     steps:
     - uses: actions/checkout@v4
@@ -119,30 +133,19 @@ jobs:
           ${{ env.TEST_PROJECT }}/.build
         fail-on-cache-miss: true
     - uses: ./.github/actions/build-and-test-sdk
-      name: Build, Test, Publish ${{ env.SWIFT_VERSION }} for ${{ env.DISTRIBUTION }}
+      name: Build, Test, Publish ${{ env.SWIFT_VERSION }} for ${{ matrix.distribution }}
       with:
         swift-version: ${{ env.SWIFT_VERSION }}
-        distribution: ${{ env.DISTRIBUTION }}
+        distribution: ${{ matrix.distribution }}
         target-arch: aarch64
-
-  build-test-armv7:
-    name: Build & Test SDK (armv7)
-    runs-on: ubuntu-24.04
-    needs: [sdk-generator-amd64]
-    if: ${{ inputs.distribution != 'rhel-ubi9' && inputs.distribution != 'amazonlinux2' }}
-    steps:
-    - uses: actions/checkout@v4
-    - name: Restore Swift SDK Generator
-      uses: actions/cache/restore@v4
+    - name: Update Release ${{ env.SWIFT_VERSION }}
+      uses: ncipollo/release-action@v1
       with:
-        key: common-dependencies-amd64
-        path: |
-          ${{ env.SDK_GENERATOR_DIR }}
-          ${{ env.TEST_PROJECT }}/.build
-        fail-on-cache-miss: true
-    - uses: ./.github/actions/build-and-test-sdk
-      name: Build, Test, Publish ${{ env.SWIFT_VERSION }} for ${{ env.DISTRIBUTION }}
-      with:
-        swift-version: ${{ env.SWIFT_VERSION }}
-        distribution: ${{ env.DISTRIBUTION }}
-        target-arch: armv7
+        allowUpdates: true
+        name: Swift ${{ env.SWIFT_VERSION }} SDKs
+        tag: ${{ env.SWIFT_VERSION }}
+        commit: ${{ github.sha }}
+        artifactErrorsFailBuild: false
+        artifacts: "artifacts/*.tar.gz"
+        body: |
+          Swift ${{ env.SWIFT_VERSION }} SDKs pre-built for various supported Linux distributions.
