@@ -10,38 +10,30 @@ inputs:
   target-arch:
     description: The architecture to generate the SDK for (.e.g, x86_64, aarch64, armv7).
     required: true
-  target-binutils:
-    description: The suffix of the binutils to install for the target (e.g., x86_64-linux-gnu).
-    required: true
 runs:
   using: "composite"
   steps:
-  - name: Install Dependencies
-    shell: bash
-    run: sudo apt install -y binutils binutils-${{ inputs.target-binutils }}
   - name: Build SDK
     shell: bash
-    run: ./build-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }}
+    run: |
+      ./build-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }}
   - name: Test SDK with test-project
     shell: bash
     run: ./test-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }} \
         --build-tests
-      cp test-project/.build/debug/hello-world artifacts/
-      cp test-project/.build/debug/*.xctest artifacts/
+      mkdir test
+      cp test-project/.build/debug/hello-world test
+      cp test-project/.build/debug/*.xctest test
   - name: Test SDK with test-project (static)
     shell: bash
-    run: ./test-sdk.sh \
-        ${{ inputs.target-arch }} \
-        ${{ inputs.swift-version }} \
-        ${{ inputs.distribution }} \
+    run: ./test-sdk.sh ${{ inputs.target-arch }} ${{ inputs.swift-version }} ${{ inputs.distribution }} \
         --static-swift-stdlib
-      cp test-project/.build/debug/hello-world artifacts/
+      cp test-project/.build/debug/hello-world test/hello-world-static
   - uses: actions/upload-artifact@v4
     name: Publish SDK
     with:
       name: artifacts-${{ inputs.swift-version }}-${{ inputs.distribution }}-${{ inputs.target-arch }}
       path: |
-        */*.deb
-        */*.artifactbundle.tar.gz
-        */hello-world
-        */*.xctest
+        artifacts/*.artifactbundle.tar.gz
+        test/hello-world*
+        test/*.xctest

@@ -33,8 +33,8 @@ env:
   TEST_PROJECT: test-project
 
 jobs:
-  common-dependencies-amd64:
-    name: Common Dependencies (amd64)
+  sdk-generator-amd64:
+    name: Swift SDK Generator (amd64)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -57,8 +57,8 @@ jobs:
       - name: Resolve Test Dependencies
         shell: bash
         run: swift package resolve --package-path ${{ env.TEST_PROJECT }}
-  common-dependencies-arm64:
-    name: Common Dependencies (arm64)
+  sdk-generator-arm64:
+    name: Swift SDK Generator (arm64)
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
@@ -85,13 +85,13 @@ jobs:
   build-test-x86_64:
     name: Build & Test SDK (x86_64)
     runs-on: ubuntu-24.04
-    needs: [common-dependencies-amd64]
+    needs: [sdk-generator-amd64]
     steps:
     - uses: actions/checkout@v4
-    - name: Restore Common Dependencies
+    - name: Restore Swift SDK Generator
       uses: actions/cache/restore@v4
       with:
-        key: common-dependencies
+        key: common-dependencies-amd64
         path: |
           ${{ env.SDK_GENERATOR_DIR }}
           ${{ env.TEST_PROJECT }}/.build
@@ -102,15 +102,14 @@ jobs:
         swift-version: ${{ env.SWIFT_VERSION }}
         distribution: ${{ env.DISTRIBUTION }}
         target-arch: x86_64
-        target-binutils: x86-64-linux-gnu
 
   build-test-aarch64:
     name: Build & Test SDK (aarch64)
     runs-on: ubuntu-24.04-arm
-    needs: [common-dependencies-arm64]
+    needs: [sdk-generator-arm64]
     steps:
     - uses: actions/checkout@v4
-    - name: Restore Common Dependencies
+    - name: Restore Swift SDK Generator
       uses: actions/cache/restore@v4
       with:
         key: common-dependencies-arm64
@@ -124,16 +123,15 @@ jobs:
         swift-version: ${{ env.SWIFT_VERSION }}
         distribution: ${{ env.DISTRIBUTION }}
         target-arch: aarch64
-        target-binutils: aarch64-linux-gnu
 
   build-test-armv7:
     name: Build & Test SDK (armv7)
     runs-on: ubuntu-24.04
-    needs: [common-dependencies-amd64]
+    needs: [sdk-generator-amd64]
     if: ${{ inputs.distribution != 'rhel-ubi9' }}
     steps:
     - uses: actions/checkout@v4
-    - name: Restore Common Dependencies
+    - name: Restore Swift SDK Generator
       uses: actions/cache/restore@v4
       with:
         key: common-dependencies-amd64
@@ -147,4 +145,4 @@ jobs:
         swift-version: ${{ env.SWIFT_VERSION }}
         distribution: ${{ env.DISTRIBUTION }}
         target-arch: armv7
-        target-binutils: arm-linux-gnueabihf
+
