@@ -129,7 +129,7 @@ jobs:
     name: Build & Test SDK (armv7)
     runs-on: ubuntu-24.04
     needs: [sdk-generator-amd64]
-    if: ${{ inputs.distribution != 'rhel-ubi9' }}
+    if: ${{ inputs.distribution != 'rhel-ubi9' && inputs.distribution != 'amazonlinux2' }}
     steps:
     - uses: actions/checkout@v4
     - name: Restore Swift SDK Generator
@@ -146,4 +146,3 @@ jobs:
         swift-version: ${{ env.SWIFT_VERSION }}
         distribution: ${{ env.DISTRIBUTION }}
         target-arch: armv7
-
