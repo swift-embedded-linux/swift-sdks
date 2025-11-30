@@ -23,6 +23,7 @@ on:
           - debian-bullseye
           - debian-bookworm
           - rhel-ubi9
+          - amazonlinux2
   pull_request:
     branches: [ "main" ]
 

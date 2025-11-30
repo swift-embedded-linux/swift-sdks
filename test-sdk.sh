@@ -25,7 +25,6 @@ if [[ $SWIFT_VERSION == *"6."* ]]; then
     SWIFT_SDK_COMMAND="swift-sdk"
 fi
 
-SDK_NAME=${SWIFT_VERSION}-RELEASE_${DISTRIBUTION_NAME}_${DISTRIBUTION_VERSION}_${TARGET_ARCH}
 PACKAGE_PATH="--package-path ${TEST_PROJECT}"
 echo "Testing ${SDK_NAME} by building test-project in ${BUILD_PROFILE} mode with extra flags: ${EXTRA_FLAGS}"
 swift package clean ${PACKAGE_PATH}
