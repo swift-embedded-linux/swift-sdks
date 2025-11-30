@@ -27,7 +27,7 @@ fi
 
 SDK_NAME=${SWIFT_VERSION}-RELEASE_${DISTRIBUTION_NAME}_${DISTRIBUTION_VERSION}_${TARGET_ARCH}
 PACKAGE_PATH="--package-path ${TEST_PROJECT}"
-echo "Testing $SDK_NAME by building test-project with extra flags: ${EXTRA_FLAGS}"
+echo "Testing ${SDK_NAME} by building test-project in ${BUILD_PROFILE} mode with extra flags: ${EXTRA_FLAGS}"
 swift package clean ${PACKAGE_PATH}
 docker run --rm \
     --user ${USER} \
@@ -35,6 +35,7 @@ docker run --rm \
     --workdir /src \
     ${BUILDER_TAG} \
     /bin/bash -c "swift build \
+        -c ${BUILD_PROFILE} \
         ${PACKAGE_PATH} \
         --${SWIFT_SDK_COMMAND}s-path swift-sdk-generator/Bundles \
         --${SWIFT_SDK_COMMAND} ${SDK_NAME} ${EXTRA_FLAGS}"

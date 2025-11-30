@@ -28,6 +28,11 @@ runs:
     run: |
       ./test-sdk.sh ${{ inputs.swift-version }} ${{ inputs.distribution }} ${{ inputs.target-arch }} --static-swift-stdlib
       cp test-project/.build/debug/hello-world artifacts/hello-world-static
+  - name: Test SDK with test-project (release)
+    shell: bash
+    run: |
+      BUILD_PROFILE=release ./test-sdk.sh ${{ inputs.swift-version }} ${{ inputs.distribution }} ${{ inputs.target-arch }}
+      cp test-project/.build/release/hello-world artifacts/hello-world-release
   - uses: actions/upload-artifact@v4
     name: Publish SDK
     with:
