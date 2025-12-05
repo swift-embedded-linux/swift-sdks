@@ -1,6 +1,6 @@
 # The purpose of this CI is to build and test Linux Cross SDKs during development.
 # Only a single version of the SDK will be built for each architecture and tested.
-name: Develop Swift Linux Cross SDKs
+name: Develop Linux Swift SDKs
 run-name: Build Swift SDKs for ${{ inputs.swift-version }} ${{ inputs.distribution }}
 
 on:
