@@ -22,6 +22,7 @@ on:
           - ubuntu-noble
           - debian-bullseye
           - debian-bookworm
+          - debian-trixie
           - rhel-ubi9
           - amazonlinux2
   pull_request:

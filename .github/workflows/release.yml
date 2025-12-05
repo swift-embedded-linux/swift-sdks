@@ -68,6 +68,7 @@ jobs:
         - ubuntu-jammy
         - ubuntu-noble
         - debian-bookworm
+        - debian-trixie
         - rhel-ubi9
         - amazonlinux2
     name: Build x86_64
@@ -117,6 +118,7 @@ jobs:
         - ubuntu-jammy
         - ubuntu-noble
         - debian-bookworm
+        - debian-trixie
         - rhel-ubi9
         - amazonlinux2
     name: Build aarch64
@@ -167,6 +169,7 @@ jobs:
         - ubuntu-jammy
         - ubuntu-noble
         - debian-bookworm
+        - debian-trixie
     name: Build armv7
     runs-on: ubuntu-24.04
     permissions:

@@ -74,6 +74,14 @@ case ${DISTRIBUTION_VERSION} in
         # Some bookworm containers are missing this package..."
         EXTRA_PACKAGES="libstdc++-12-dev ${EXTRA_PACKAGES}"
         ;;
+    "trixie")
+        DOCKERFILE="swift-debian-unofficial.dockerfile"
+        GENERATOR_DISTRIBUTION_VERSION="13"
+        # Set Swift versions for downloading runtime
+        SWIFT_PLATFORM="ubuntu24.04"
+        SWIFT_BRANCH="swift-$SWIFT_VERSION-release"
+        SWIFT_TAG="swift-$SWIFT_VERSION-RELEASE"
+        ;;
     "ubi9")
         GENERATOR_DISTRIBUTION_NAME="rhel"
         GENERATOR_DISTRIBUTION_VERSION="ubi9"
