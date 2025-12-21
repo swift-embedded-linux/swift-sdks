@@ -2,7 +2,7 @@ ARG DISTRIBUTION_NAME=debian
 ARG DISTRIBUTION_VERSION=bullseye
 FROM ${DISTRIBUTION_NAME}:${DISTRIBUTION_VERSION}
 ARG EXTRA_PACKAGES
-RUN apt-get update && \
+RUN apt-get update && apt-get -y upgrade \
     apt-get -y install wget clang libsystemd-dev zlib1g-dev libcurl4-openssl-dev libxml2-dev ${EXTRA_PACKAGES} && \
     apt-get -y clean
 
