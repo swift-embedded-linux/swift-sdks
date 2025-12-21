@@ -135,7 +135,7 @@ jobs:
     name: Build & Test SDK (armv7)
     runs-on: ubuntu-24.04
     needs: [sdk-generator-amd64]
-    if: ${{ startsWith(inputs.distribution, 'rhel') && startsWith(inputs.distribution, 'fedora') && startsWith(inputs.distribution, 'amazonlinux') }}
+    if: ${{ startsWith(inputs.distribution, 'ubuntu') || startsWith(inputs.distribution, 'debian') }}
     steps:
     - uses: actions/checkout@v4
     - name: Restore Swift SDK Generator
