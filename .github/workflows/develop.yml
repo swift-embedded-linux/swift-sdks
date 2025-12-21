@@ -9,7 +9,7 @@ on:
       swift-version:
         description: 'Swift Version'
         required: true
-        default: '6.2.1'
+        default: '6.2.3'
         type: string
       distribution:
         description: 'Distribution'
@@ -24,6 +24,11 @@ on:
           - debian-bookworm
           - debian-trixie
           - rhel-ubi9
+          - fedora-39
+          - fedora-40
+          - fedora-41
+          - fedora-42
+          - fedora-43
           - amazonlinux2
   pull_request:
     branches: [ "main" ]

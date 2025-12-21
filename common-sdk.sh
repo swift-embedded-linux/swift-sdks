@@ -36,6 +36,10 @@ case ${DISTRIBUTION_NAME} in
         DOCKERFILE="swift-rhel.dockerfile"
         is_rhel=true
         ;;
+    "fedora")
+        DOCKERFILE="swift-rhel-unofficial.dockerfile"
+        is_rhel=true
+        ;;
     "amazonlinux2")
         DOCKERFILE="swift-rhel-old.dockerfile"
         is_rhel=true
@@ -51,6 +55,8 @@ esac
 ## MARK: Distribution Version
 GENERATOR_DISTRIBUTION_NAME=${DISTRIBUTION_NAME}
 SWIFT_DISTRIBUTION_TAG=$DISTRIBUTION_VERSION
+SWIFT_BRANCH="swift-$SWIFT_VERSION-release"
+SWIFT_TAG="swift-$SWIFT_VERSION-RELEASE"
 case ${DISTRIBUTION_VERSION} in
     "focal")
         GENERATOR_DISTRIBUTION_VERSION="20.04"
@@ -66,8 +72,6 @@ case ${DISTRIBUTION_VERSION} in
         GENERATOR_DISTRIBUTION_VERSION="11"
         # Set Swift versions for downloading runtime
         SWIFT_PLATFORM="ubuntu20.04"
-        SWIFT_BRANCH="swift-$SWIFT_VERSION-release"
-        SWIFT_TAG="swift-$SWIFT_VERSION-RELEASE"
         ;;
     "bookworm")
         GENERATOR_DISTRIBUTION_VERSION="12"
@@ -79,13 +83,26 @@ case ${DISTRIBUTION_VERSION} in
         GENERATOR_DISTRIBUTION_VERSION="13"
         # Set Swift versions for downloading runtime
         SWIFT_PLATFORM="ubuntu24.04"
-        SWIFT_BRANCH="swift-$SWIFT_VERSION-release"
-        SWIFT_TAG="swift-$SWIFT_VERSION-RELEASE"
         ;;
     "ubi9")
         GENERATOR_DISTRIBUTION_NAME="rhel"
         GENERATOR_DISTRIBUTION_VERSION="ubi9"
         SWIFT_DISTRIBUTION_TAG="rhel-ubi9"
+        ;;
+    "39")
+        # We use rhel-ubi9 to pass to the generator
+        GENERATOR_DISTRIBUTION_NAME="rhel"
+        GENERATOR_DISTRIBUTION_VERSION="ubi9"
+        # Use official fedora39 build for fedora-39
+        SWIFT_PLATFORM="fedora39"
+        SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
+        ;;
+    "40" | "41" | "42" | "43")
+        # We use rhel-ubi9 to pass to the generator
+        GENERATOR_DISTRIBUTION_NAME="rhel"
+        GENERATOR_DISTRIBUTION_VERSION="ubi9"
+        SWIFT_PLATFORM="ubi9"
+        SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
         ;;
     "amazonlinux2")
         # We use rhel-ubi9 to pass to the generator
