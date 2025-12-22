@@ -3,9 +3,9 @@ ARG DISTRIBUTION_VERSION=jammy
 FROM ${DISTRIBUTION_NAME}:${DISTRIBUTION_VERSION}
 
 ARG EXTRA_PACKAGES
-RUN apt update && \
-    apt -y install wget clang libsystemd-dev zlib1g-dev libcurl4-openssl-dev libxml2-dev ${EXTRA_PACKAGES} && \
-    apt -y clean
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get -y install wget clang libsystemd-dev zlib1g-dev libcurl4-openssl-dev libxml2-dev ${EXTRA_PACKAGES} && \
+    apt-get -y clean
 
 ARG SWIFT_VERSION
 ARG DISTRIBUTION_NAME=ubuntu
