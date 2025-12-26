@@ -4,6 +4,7 @@ FROM ${DISTRIBUTION_NAME}:${DISTRIBUTION_VERSION}
 ARG EXTRA_PACKAGES
 RUN dnf -y update && \
     dnf -y install \
+        tar gzip \
         systemd-devel \
         glibc-headers \
         libcurl-devel \
