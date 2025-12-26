@@ -40,10 +40,9 @@ case ${DISTRIBUTION_NAME} in
         DOCKERFILE="swift-rhel-unofficial.dockerfile"
         is_rhel=true
         ;;
-    "amazonlinux2")
+    "amazonlinux")
         DOCKERFILE="swift-rhel-old.dockerfile"
         is_rhel=true
-        DISTRIBUTION_VERSION=$DISTRIBUTION_NAME
         ;;
     *)
         echo "Error: unsupported distribution ${DISTRIBUTION_NAME}"
@@ -89,12 +88,12 @@ case ${DISTRIBUTION_VERSION} in
         GENERATOR_DISTRIBUTION_VERSION="ubi9"
         SWIFT_DISTRIBUTION_TAG="rhel-ubi9"
         ;;
-    "39")
+    "39" | "2")
         # We use rhel-ubi9 to pass to the generator
         GENERATOR_DISTRIBUTION_NAME="rhel"
         GENERATOR_DISTRIBUTION_VERSION="ubi9"
-        # Use official fedora39 build for fedora-39
-        SWIFT_PLATFORM="fedora39"
+        # Use official fedora39/amazonlinux2 builds
+        SWIFT_PLATFORM="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
         SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
         ;;
     "40" | "41" | "42" | "43")
@@ -103,11 +102,6 @@ case ${DISTRIBUTION_VERSION} in
         GENERATOR_DISTRIBUTION_VERSION="ubi9"
         SWIFT_PLATFORM="ubi9"
         SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
-        ;;
-    "amazonlinux2")
-        # We use rhel-ubi9 to pass to the generator
-        GENERATOR_DISTRIBUTION_NAME="rhel"
-        GENERATOR_DISTRIBUTION_VERSION="ubi9"
         ;;
     *)
         DOCKERFILE="swift-unofficial.dockerfile"
