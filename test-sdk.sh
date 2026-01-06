@@ -17,7 +17,7 @@ docker build \
     --build-arg USER=${USER} \
     --build-arg UID=${UID} \
     --tag ${BUILDER_TAG} \
-    --file swift-builder.dockerfile \
+    --file docker/swift-builder.dockerfile \
     .
 
 SWIFT_SDK_COMMAND="experimental-swift-sdk"

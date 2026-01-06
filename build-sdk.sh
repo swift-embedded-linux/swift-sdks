@@ -24,7 +24,7 @@ docker build \
     --build-arg DISTRIBUTION_NAME=${DISTRIBUTION_NAME} \
     --build-arg DISTRIBUTION_VERSION=${DISTRIBUTION_VERSION} \
     --build-arg EXTRA_PACKAGES=${EXTRA_PACKAGES} \
-    --file ${DOCKERFILE} \
+    --file docker/${DOCKERFILE} \
     .
 
 echo "Building Swift ${SWIFT_VERSION} ${SWIFT_DISTRIBUTION_TAG} SDK for ${TARGET_ARCH}..."
