@@ -43,19 +43,6 @@ BUNDLES_DIR=swift-sdk-generator/Bundles
 SDK_DIR=$SDK_NAME.artifactbundle
 SDK_SYSROOT_DIR=$SDK_DIR/$SDK_NAME/$TARGET_TRIPLE/*.sdk
 
-# Build package
-# case ${DISTRIBUTION_NAME} in
-#     "ubuntu" | "debian")
-#         SWIFT_VERSION=${SWIFT_VERSION} \
-#         DISTRIBUTION_NAME=${DISTRIBUTION_NAME} \
-#         DISTRIBUTION_VERSION=${DISTRIBUTION_VERSION} \
-#         LINUX_PLATFORM=${LINUX_PLATFORM} \
-#         SDK_SYSROOT_PATH=${BUNDLES_DIR}/${SDK_SYSROOT_DIR} \
-#         STRIP_BINARY="${BINUTILS_NAME}-strip" \
-#         ./build-deb.sh
-#         ;;
-# esac
-
 # Compress SDK as the final step
 cd $BUNDLES_DIR
 mkdir -p $ARTIFACTS_DIR
