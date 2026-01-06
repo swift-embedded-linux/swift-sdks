@@ -5,12 +5,12 @@ set -e
 source ./common-sdk.sh
 
 SDK_GENERATOR_PATH=./swift-sdk-generator/.build/release/swift-sdk-generator
-IMAGE_TAG=${IMAGE_TAG:=swift-sysroot:${SWIFT_VERSION}-${SWIFT_DISTRIBUTION_TAG}}
+IMAGE_TAG=${IMAGE_TAG:=swift-sysroot:${SWIFT_VERSION}-${SWIFT_DISTRIBUTION_TAG}-${TARGET_ARCH}}
 
 echo "Starting up qemu emulation"
 docker run --privileged --rm tonistiigi/binfmt --install all
 
-echo "Building ${IMAGE_TAG} image for ${LINUX_PLATFORM}..."
+echo "Building ${IMAGE_TAG} image for linux/${LINUX_PLATFORM}..."
 echo "Extra Packages: ${EXTRA_PACKAGES}"
 docker build \
     --network=host \
