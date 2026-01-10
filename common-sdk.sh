@@ -53,33 +53,24 @@ esac
 
 ## MARK: Distribution Version
 GENERATOR_DISTRIBUTION_NAME=${DISTRIBUTION_NAME}
+GENERATOR_DISTRIBUTION_VERSION=${DISTRIBUTION_VERSION}
 SWIFT_DISTRIBUTION_TAG=$DISTRIBUTION_VERSION
 SWIFT_BRANCH="swift-$SWIFT_VERSION-release"
 SWIFT_TAG="swift-$SWIFT_VERSION-RELEASE"
 case ${DISTRIBUTION_VERSION} in
-    "focal")
-        GENERATOR_DISTRIBUTION_VERSION="20.04"
-        ;;
-    "jammy")
-        GENERATOR_DISTRIBUTION_VERSION="22.04"
-        ;;
-    "noble")
-        GENERATOR_DISTRIBUTION_VERSION="24.04"
+    "focal" | "jammy" | "noble")
         ;;
     "bullseye")
         DOCKERFILE="swift-debian-unofficial.dockerfile"
-        GENERATOR_DISTRIBUTION_VERSION="11"
         # Set Swift versions for downloading runtime
         SWIFT_PLATFORM="ubuntu20.04"
         ;;
     "bookworm")
-        GENERATOR_DISTRIBUTION_VERSION="12"
         # Some bookworm containers are missing this package..."
         EXTRA_PACKAGES="libstdc++-12-dev ${EXTRA_PACKAGES}"
         ;;
     "trixie")
         DOCKERFILE="swift-debian-unofficial.dockerfile"
-        GENERATOR_DISTRIBUTION_VERSION="13"
         # Set Swift versions for downloading runtime
         SWIFT_PLATFORM="ubuntu24.04"
         ;;
