@@ -14,7 +14,7 @@ on:
       distribution:
         description: 'Distribution'
         required: true
-        default: 'debian-bookworm'
+        default: 'debian-trixie'
         type: choice
         options:
           - ubuntu-focal
