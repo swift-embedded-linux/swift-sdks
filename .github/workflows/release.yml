@@ -8,11 +8,11 @@ on:
       swift-version:
         description: 'Swift Version'
         required: true
-        default: '6.2.1'
+        default: '6.2.4'
         type: string
 
 env:
-  SWIFT_VERSION: ${{ inputs.swift-version || '6.1.2' }}
+  SWIFT_VERSION: ${{ inputs.swift-version || '6.2.4' }}
   SDK_GENERATOR_DIR: swift-sdk-generator
   TEST_PROJECT: test-project
 
