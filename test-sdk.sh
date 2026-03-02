@@ -10,10 +10,10 @@ BUILD_PROFILE=${BUILD_PROFILE:=debug}
 
 EXTRA_FLAGS=$4
 
-BUILDER_TAG=swift-builder:${SWIFT_VERSION}
+BUILDER_TAG=swift-builder:${SWIFT_IMAGE_VERSION}
 echo "Building ${BUILDER_TAG} image to be used to compile test-project..."
 docker build \
-    --build-arg SWIFT_VERSION=${SWIFT_VERSION} \
+    --build-arg SWIFT_IMAGE_VERSION=${SWIFT_IMAGE_VERSION} \
     --build-arg USER=${USER} \
     --build-arg UID=${UID} \
     --tag ${BUILDER_TAG} \

@@ -7,6 +7,14 @@ if [ -z $SWIFT_VERSION ]; then
     exit -1
 fi
 
+# We want the Swift image version to contian the patch version,
+# so if the user passed in a simple version like "6.2" we append ".0" 
+# to ensure we get the correct image and not the latest in the series.
+SWIFT_IMAGE_VERSION="$SWIFT_VERSION"
+if [[ "${SWIFT_IMAGE_VERSION}" =~ ^[0-9]+\.[0-9]+$ ]]; then
+    SWIFT_IMAGE_VERSION="${SWIFT_IMAGE_VERSION}.0"
+fi
+
 DISTRIBUTION=$2
 DISTRIBUTION=$(echo $DISTRIBUTION | xargs)
 if [ -z $DISTRIBUTION ]; then 

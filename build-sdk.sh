@@ -19,6 +19,7 @@ docker build \
     --build-arg SWIFT_PLATFORM=${SWIFT_PLATFORM} \
     --build-arg SWIFT_BRANCH=${SWIFT_BRANCH} \
     --build-arg SWIFT_VERSION=${SWIFT_VERSION} \
+    --build-arg SWIFT_IMAGE_VERSION=${SWIFT_IMAGE_VERSION} \
     --build-arg SWIFT_DISTRIBUTION_TAG=${SWIFT_DISTRIBUTION_TAG} \
     --build-arg SWIFT_TAG=${SWIFT_TAG} \
     --build-arg DISTRIBUTION_NAME=${DISTRIBUTION_NAME} \
