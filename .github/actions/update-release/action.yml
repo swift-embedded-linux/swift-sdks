@@ -1,0 +1,26 @@
+name: Upload release artifacts from the artifacts/* directory.
+description: This performs all the actions needed to generate a cross-compilation SDK.
+inputs:
+  swift-version:
+    description: The version of Swift to use (.e.g., 6.0.3).
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Update Release ${{ inputs.swift-version }}
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        name: Swift ${{ inputs.swift-version }} SDKs
+        tag: ${{ inputs.swift-version }}
+        commit: ${{ github.sha }}
+        artifactErrorsFailBuild: false
+        artifacts: "artifacts/*.tar.gz"
+        body: |
+          Swift SDKs for Swift ${{ inputs.swift-version }} pre-built for various Linux distributions and architectures.
+
+          Includes the following "extra" packages:
+            - `libsystemd-dev` (Debian) / `systemd-devel` (RHEL)
+
+          If you need more package support, please open an issue on the repository or generate your own custom
+          Swift SDKs using the [scripts in this repo](https://github.com/swift-embedded-linux/swift-sdks/blob/main/README.md).
