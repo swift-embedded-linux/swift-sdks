@@ -98,23 +98,10 @@ jobs:
         swift-version: ${{ env.SWIFT_VERSION }}
         distribution: ${{ matrix.distribution }}
         target-arch: x86_64
-    - name: Update Release ${{ env.SWIFT_VERSION }}
-      uses: ncipollo/release-action@v1
+    - uses: ./.github/actions/update-release
+      name: Update Release ${{ env.SWIFT_VERSION }}
       with:
-        allowUpdates: true
-        name: Swift ${{ env.SWIFT_VERSION }} SDKs
-        tag: ${{ env.SWIFT_VERSION }}
-        commit: ${{ github.sha }}
-        artifactErrorsFailBuild: false
-        artifacts: "artifacts/*.tar.gz"
-        body: |
-          Swift SDKs for Swift ${{ env.SWIFT_VERSION }} pre-built for various Linux distributions and architectures.
-
-          Includes the following "extra" packages:
-            - `libsystemd-dev` (Debian) / `systemd-devel` (RHEL)
-
-          If you need more package support, please open an issue on the repository or generate custom Swift SDKs
-          using the [swift-sdk-generator](https://github.com/swiftlang/swift-sdk-generator) project.
+        swift-version: ${{ env.SWIFT_VERSION }}
 
   build-test-aarch64:
     strategy:
@@ -154,23 +141,11 @@ jobs:
         swift-version: ${{ env.SWIFT_VERSION }}
         distribution: ${{ matrix.distribution }}
         target-arch: aarch64
-    - name: Update Release ${{ env.SWIFT_VERSION }}
-      uses: ncipollo/release-action@v1
+    - uses: ./.github/actions/update-release
+      name: Update Release ${{ env.SWIFT_VERSION }}
       with:
-        allowUpdates: true
-        name: Swift ${{ env.SWIFT_VERSION }} SDKs
-        tag: ${{ env.SWIFT_VERSION }}
-        commit: ${{ github.sha }}
-        artifactErrorsFailBuild: false
-        artifacts: "artifacts/*.tar.gz"
-        body: |
-          Swift SDKs for Swift ${{ env.SWIFT_VERSION }} pre-built for various Linux distributions and architectures.
+        swift-version: ${{ env.SWIFT_VERSION }}
 
-          Includes the following "extra" packages:
-            - `libsystemd-dev` (Debian) / `systemd-devel` (RHEL)
-
-          If you need more package support, please open an issue on the repository or generate custom Swift SDKs
-          using the [swift-sdk-generator](https://github.com/swiftlang/swift-sdk-generator) project.
 
   build-test-armv7:
     strategy:
@@ -203,21 +178,7 @@ jobs:
         swift-version: ${{ env.SWIFT_VERSION }}
         distribution: ${{ matrix.distribution }}
         target-arch: armv7
-    - name: Update Release ${{ env.SWIFT_VERSION }}
-      uses: ncipollo/release-action@v1
+    - uses: ./.github/actions/update-release
+      name: Update Release ${{ env.SWIFT_VERSION }}
       with:
-        allowUpdates: true
-        name: Swift ${{ env.SWIFT_VERSION }} SDKs
-        tag: ${{ env.SWIFT_VERSION }}
-        commit: ${{ github.sha }}
-        artifactErrorsFailBuild: false
-        artifacts: "artifacts/*.tar.gz"
-        body: |
-          Swift SDKs for Swift ${{ env.SWIFT_VERSION }} pre-built for various Linux distributions and architectures.
-
-          Includes the following "extra" packages:
-            - `libsystemd-dev` (Debian) / `systemd-devel` (RHEL)
-
-          If you need more package support, please open an issue on the repository or generate custom Swift SDKs
-          using the [swift-sdk-generator](https://github.com/swiftlang/swift-sdk-generator) project.
-
+        swift-version: ${{ env.SWIFT_VERSION }}
