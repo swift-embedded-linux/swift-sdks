@@ -75,6 +75,7 @@ jobs:
         - fedora-41
         - fedora-42
         - fedora-43
+        - fedora-44
         - amazonlinux-2
         - amazonlinux-2023
     name: Build x86_64
@@ -118,6 +119,7 @@ jobs:
         - fedora-41
         - fedora-42
         - fedora-43
+        - fedora-44
         - amazonlinux-2
         - amazonlinux-2023
     name: Build aarch64

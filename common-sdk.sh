@@ -103,7 +103,7 @@ case ${DISTRIBUTION_VERSION} in
         SWIFT_PLATFORM="ubi9"
         SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
         ;;
-    "40" | "41" | "42" | "43")
+    "40" | "41" | "42" | "43" | "44")
         # We use rhel-ubi9 to pass to the generator
         GENERATOR_DISTRIBUTION_NAME="rhel"
         GENERATOR_DISTRIBUTION_VERSION="ubi9"
