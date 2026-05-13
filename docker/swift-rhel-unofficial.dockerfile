@@ -10,6 +10,7 @@ RUN dnf -y update && \
         libcurl-devel \
         libxml2-devel \
         python3-devel \
+        gcc g++ \
         libstdc++-devel \
         libstdc++-static \
         ${EXTRA_PACKAGES}
