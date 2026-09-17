@@ -8,6 +8,7 @@ import Glibc
 import Observation
 import RegexBuilder
 import SwiftOverlayShims
+import Systemd
 
 #if canImport(FoundationInternationalization)
     import FoundationInternationalization
@@ -24,3 +25,11 @@ import SwiftOverlayShims
 #endif
 
 print("Hello, World!")
+
+print("")
+print("--- Systemd Bus Properties ---")
+print("Hostname: \(await SystemdBus.hostname)")
+print("Kernel Name: \(await SystemdBus.kernelName)")
+print("Kernel Release: \(await SystemdBus.kernelRelease)")
+print("Kernel Version: \(await SystemdBus.kernelVersion)")
+print("Operating System: \(await SystemdBus.operatingSystem)")
