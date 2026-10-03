@@ -8,6 +8,7 @@ import Glibc
 import Observation
 import RegexBuilder
 import SwiftOverlayShims
+import Systemd
 
 #if canImport(FoundationInternationalization)
     import FoundationInternationalization
@@ -24,3 +25,4 @@ import SwiftOverlayShims
 #endif
 
 print("Hello, World!")
+print("Systemd watchdog enabled: \(SystemdHelpers.watchdogEnabled)")

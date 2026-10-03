@@ -6,7 +6,8 @@ import PackageDescription
 let package = Package(
     name: "test-project",
     dependencies: [
-        .package(url: "https://github.com/xtremekforever/swift-systemd.git", from: "0.1.0")
+        // 0.4 adds sd-bus APIs that Amazon Linux 2's libsystemd does not provide.
+        .package(url: "https://github.com/xtremekforever/swift-systemd.git", "0.3.0"..<"0.4.0")
     ],
     targets: [
         .executableTarget(

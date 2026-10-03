@@ -2,4 +2,5 @@ ARG SWIFT_IMAGE_VERSION=6.2.4
 ARG SWIFT_DISTRIBUTION_TAG=amazonlinux2
 FROM swift:${SWIFT_IMAGE_VERSION}-${SWIFT_DISTRIBUTION_TAG}
 ARG EXTRA_PACKAGES
+# Amazon Linux 2 provides the daemon/journal APIs but no public sd-bus API.
 RUN yum -y install systemd-devel ${EXTRA_PACKAGES} && yum clean all
