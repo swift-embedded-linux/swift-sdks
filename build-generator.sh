@@ -16,7 +16,9 @@ git force-clone -b $SDK_GENERATOR_BRANCH $SDK_GENERATOR_REPO $SDK_GENERATOR_DIR 
 cd $SDK_GENERATOR_DIR
 
 # Build
-swift build -c release --static-swift-stdlib
+# Swift 6.4's Swift Build backend also needs the compiler flag to autolink
+# Foundation's static dependencies.
+swift build -c release --static-swift-stdlib -Xswiftc -static-stdlib
 
 # Test
 ./.build/release/swift-sdk-generator --help
