@@ -9,7 +9,7 @@ on:
       swift-version:
         description: 'Swift Version'
         required: true
-        default: '6.3.3'
+        default: '6.4.0'
         type: string
       distribution:
         description: 'Distribution'
@@ -25,6 +25,7 @@ on:
           - debian-bookworm
           - debian-trixie
           - rhel-ubi9
+          - rhel-ubi10
           - fedora-39
           - fedora-40
           - fedora-41
@@ -37,8 +38,9 @@ on:
     branches: [ "main" ]
 
 env:
-  SWIFT_VERSION: ${{ inputs.swift-version || '6.1.2' }}
+  SWIFT_VERSION: ${{ inputs.swift-version || '6.4.0' }}
   DISTRIBUTION: ${{ inputs.distribution || 'debian-bookworm' }}
+  SDK_GENERATOR_BRANCH: feature/support-6.4.0-new-linux-versions
   SDK_GENERATOR_DIR: swift-sdk-generator
   TEST_PROJECT: test-project
 
