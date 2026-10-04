@@ -66,7 +66,7 @@ SWIFT_DISTRIBUTION_TAG=$DISTRIBUTION_VERSION
 SWIFT_BRANCH="swift-$SWIFT_VERSION-release"
 SWIFT_TAG="swift-$SWIFT_VERSION-RELEASE"
 case ${DISTRIBUTION_VERSION} in
-    "focal" | "jammy" | "noble")
+    "focal" | "jammy" | "noble" | "resolute")
         ;;
     "bullseye")
         DOCKERFILE="swift-debian-unofficial.dockerfile"
@@ -78,9 +78,11 @@ case ${DISTRIBUTION_VERSION} in
         EXTRA_PACKAGES="libstdc++-12-dev ${EXTRA_PACKAGES}"
         ;;
     "trixie")
-        DOCKERFILE="swift-debian-unofficial.dockerfile"
-        # Set Swift versions for downloading runtime
-        SWIFT_PLATFORM="ubuntu24.04"
+        if [[ $SWIFT_VERSION != *"6.4."* ]]; then
+            DOCKERFILE="swift-debian-unofficial.dockerfile"
+            # Set Swift versions for downloading runtime
+            SWIFT_PLATFORM="ubuntu24.04"
+        fi
         ;;
     "ubi9")
         GENERATOR_DISTRIBUTION_NAME="rhel"
@@ -99,16 +101,41 @@ case ${DISTRIBUTION_VERSION} in
         # We use rhel-ubi9 to pass to the generator
         GENERATOR_DISTRIBUTION_NAME="rhel"
         GENERATOR_DISTRIBUTION_VERSION="ubi9"
-        DOCKERFILE="swift-rhel-unofficial.dockerfile"
-        SWIFT_PLATFORM="ubi9"
+
+        if [[ $SWIFT_VERSION == *"6.4."* ]]; then
+            # Use official amazonlinux2023 build
+            DOCKERFILE="swift-rhel.dockerfile"
+            SWIFT_PLATFORM="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
+        else
+            DOCKERFILE="swift-rhel-unofficial.dockerfile"
+            SWIFT_PLATFORM="ubi9"
+        fi
         SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
         ;;
     "40" | "41" | "42" | "43" | "44")
-        # We use rhel-ubi9 to pass to the generator
-        GENERATOR_DISTRIBUTION_NAME="rhel"
-        GENERATOR_DISTRIBUTION_VERSION="ubi9"
-        SWIFT_PLATFORM="ubi9"
-        SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
+        if [[ $SWIFT_VERSION == *"6.4."* ]]; then
+            # We'll pass ubi10 to the generator since it doesn't support Fedora as such
+            GENERATOR_DISTRIBUTION_NAME="rhel"
+            GENERATOR_DISTRIBUTION_VERSION="ubi10"
+
+            if [[ $DISTRIBUTION_VERSION == "41" ]]; then
+                # We will use the official Fedora 41 build, but unfortunately still need to
+                # generate our own container manually
+                DOCKERFILE="swift-rhel-unofficial.dockerfile"
+                SWIFT_PLATFORM="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
+            else
+                # Use ubi10 for Fedora other versions 40 and above since ubi10 matches better
+                SWIFT_PLATFORM="ubi10"
+                DOCKERFILE="swift-rhel-unofficial.dockerfile"
+                SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
+            fi
+        else
+            # We use rhel-ubi9 to pass to the generator + the toolchain
+            GENERATOR_DISTRIBUTION_NAME="rhel"
+            GENERATOR_DISTRIBUTION_VERSION="ubi9"
+            DOCKERFILE="swift-rhel-unofficial.dockerfile"
+            SWIFT_PLATFORM="ubi9"
+        fi
         ;;
     *)
         DOCKERFILE="swift-unofficial.dockerfile"
