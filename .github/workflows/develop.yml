@@ -9,7 +9,7 @@ on:
       swift-version:
         description: 'Swift Version'
         required: true
-        default: '6.2.4'
+        default: '6.3.3'
         type: string
       distribution:
         description: 'Distribution'
@@ -20,6 +20,7 @@ on:
           - ubuntu-focal
           - ubuntu-jammy
           - ubuntu-noble
+          - ubuntu-resolute
           - debian-bullseye
           - debian-bookworm
           - debian-trixie
