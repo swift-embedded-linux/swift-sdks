@@ -13,6 +13,7 @@ on:
 
 env:
   SWIFT_VERSION: ${{ inputs.swift-version || '6.4.0' }}
+  SDK_GENERATOR_BRANCH: feature/support-6.4.0-new-linux-versions
   SDK_GENERATOR_DIR: swift-sdk-generator
   TEST_PROJECT: test-project
 
