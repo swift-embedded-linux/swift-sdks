@@ -21,8 +21,9 @@ runs:
     shell: bash
     run: |
       ./test-sdk.sh ${{ inputs.swift-version }} ${{ inputs.distribution }} ${{ inputs.target-arch }} --build-tests
-      cp test-project/.build/debug/hello-world artifacts
-      cp test-project/.build/debug/*.xctest artifacts
+      cp test-project/.build/debug/hello-world artifacts/
+      cp test-project/.build/debug/Tests-test-runner artifacts/
+      cp test-project/.build/debug/Tests.so artifacts/
   - name: Test SDK with test-project (static)
     shell: bash
     run: |

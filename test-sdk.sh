@@ -5,7 +5,6 @@ set -e
 source ./common-sdk.sh
 
 TEST_PROJECT=${TEST_PROJECT:=test-project}
-TEST_BINARY=${TEST_BINARY:=hello-world}
 BUILD_PROFILE=${BUILD_PROFILE:=debug}
 
 EXTRA_FLAGS=$4
@@ -39,12 +38,15 @@ docker run --rm \
         --${SWIFT_SDK_COMMAND}s-path swift-sdk-generator/Bundles \
         --${SWIFT_SDK_COMMAND} ${SDK_NAME} ${EXTRA_FLAGS}"
 
-if [ $TEST_BINARY ]; then
-    OUTPUT_BINARY=${TEST_PROJECT}/.build/${BUILD_PROFILE}/${TEST_BINARY}
+while IFS= read -r -d '' OUTPUT_BINARY; do
+    # Object files and shared libraries can also have executable permissions.
+    BINARY_INFO=$(LC_ALL=C file -Lb "$OUTPUT_BINARY")
+    [[ "$BINARY_INFO" == ELF*executable* ]] || continue
+
     echo -n "Built Binary Info: "
-    file $OUTPUT_BINARY
+    file "$OUTPUT_BINARY"
     echo -n "Built Binary Size: "
-    du -hs $OUTPUT_BINARY
+    du -hs "$OUTPUT_BINARY"
     echo "Required Libraries:"
-    readelf -d $OUTPUT_BINARY | grep "Shared library:" | sed -n 's/.*\[\(.*\)\].*/- \1/p'
-fi
+    readelf -d "$OUTPUT_BINARY" | grep "Shared library:" | sed -n 's/.*\[\(.*\)\].*/- \1/p'
+done < <(find -L "${TEST_PROJECT}/.build/${BUILD_PROFILE}" -maxdepth 1 -type f -executable -print0)
