@@ -8,11 +8,11 @@ on:
       swift-version:
         description: 'Swift Version'
         required: true
-        default: '6.2.4'
+        default: '6.4.0'
         type: string
 
 env:
-  SWIFT_VERSION: ${{ inputs.swift-version || '6.2.4' }}
+  SWIFT_VERSION: ${{ inputs.swift-version || '6.4.0' }}
   SDK_GENERATOR_DIR: swift-sdk-generator
   TEST_PROJECT: test-project
 
@@ -67,16 +67,17 @@ jobs:
         distribution:
         - ubuntu-jammy
         - ubuntu-noble
+        - ubuntu-resolute
         - debian-bookworm
         - debian-trixie
         - rhel-ubi9
+        - rhel-ubi10
         - fedora-39
         - fedora-40
         - fedora-41
         - fedora-42
         - fedora-43
         - fedora-44
-        - amazonlinux-2
         - amazonlinux-2023
     name: Build x86_64
     runs-on: ubuntu-24.04
@@ -111,16 +112,17 @@ jobs:
         distribution:
         - ubuntu-jammy
         - ubuntu-noble
+        - ubuntu-resolute
         - debian-bookworm
         - debian-trixie
         - rhel-ubi9
+        - rhel-ubi10
         - fedora-39
         - fedora-40
         - fedora-41
         - fedora-42
         - fedora-43
         - fedora-44
-        - amazonlinux-2
         - amazonlinux-2023
     name: Build aarch64
     runs-on: ubuntu-24.04-arm
@@ -157,6 +159,7 @@ jobs:
         - ubuntu-focal
         - ubuntu-jammy
         - ubuntu-noble
+        - ubuntu-resolute
         - debian-bookworm
         - debian-trixie
     name: Build armv7
