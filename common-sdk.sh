@@ -96,6 +96,13 @@ case ${DISTRIBUTION_VERSION} in
         # Use official fedora39/amazonlinux2 builds
         SWIFT_PLATFORM="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
         SWIFT_DISTRIBUTION_TAG="$DISTRIBUTION_NAME$DISTRIBUTION_VERSION"
+
+        # Swift 6.4 no longer has an official Fedora 39 build, we can still use ubi9
+        if [[ $SWIFT_VERSION == *"6.4."* ]] && [ $DISTRIBUTION_VERSION == "39" ]; then
+            DOCKERFILE="swift-rhel-unofficial.dockerfile"
+            DOCKERFILE="swift-rhel-unofficial.dockerfile"
+            SWIFT_PLATFORM="ubi9"
+        fi
         ;;
     "2023")
         # We use rhel-ubi9 to pass to the generator
