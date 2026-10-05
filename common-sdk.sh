@@ -84,10 +84,10 @@ case ${DISTRIBUTION_VERSION} in
             SWIFT_PLATFORM="ubuntu24.04"
         fi
         ;;
-    "ubi9")
+    "ubi9" | "ubi10")
         GENERATOR_DISTRIBUTION_NAME="rhel"
-        GENERATOR_DISTRIBUTION_VERSION="ubi9"
-        SWIFT_DISTRIBUTION_TAG="rhel-ubi9"
+        GENERATOR_DISTRIBUTION_VERSION="$DISTRIBUTION_VERSION"
+        SWIFT_DISTRIBUTION_TAG="rhel-$DISTRIBUTION_VERSION"
         ;;
     "39" | "2")
         # We use rhel-ubi9 to pass to the generator
