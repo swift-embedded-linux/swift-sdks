@@ -63,7 +63,7 @@ jobs:
             ${{ env.TEST_PROJECT }}/.build
       - name: Build SDK Generator
         shell: bash
-        run: ./build-generator.sh
+        run: ./setup.sh
       - name: Resolve Test Dependencies
         shell: bash
         run: swift package resolve --package-path ${{ env.TEST_PROJECT }}
@@ -87,7 +87,7 @@ jobs:
             ${{ env.TEST_PROJECT }}/.build
       - name: Build SDK Generator
         shell: bash
-        run: ./build-generator.sh
+        run: ./setup.sh
       - name: Resolve Test Dependencies
         shell: bash
         run: swift package resolve --package-path ${{ env.TEST_PROJECT }}
